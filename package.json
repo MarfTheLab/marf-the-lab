@@ -1,0 +1,7 @@
+{
+  "name": "marf-the-lab",
+  "version": "1.0.0",
+  "dependencies": {
+    "stripe": "^15.0.0"
+  }
+}
