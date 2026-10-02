@@ -1,7 +1,9 @@
 {
   "name": "marf-the-lab",
   "version": "1.0.0",
+  "description": "Marf The Lab E-Commerce Backend & API",
   "dependencies": {
+    "mongoose": "^8.3.0",
     "stripe": "^15.0.0"
   }
 }
