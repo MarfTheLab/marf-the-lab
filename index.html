@@ -441,10 +441,59 @@
             document.getElementById('customPriceEstimate').innerText = `${(s + d).toFixed(2)} €`;
         }
 
-        function handleCustomSubmit(e) {
-            e.preventDefault();
-            alert('Richiesta registrata! In un ambiente reale questa richiesta verrebbe inviata via API al server backend.');
+        async function handleCustomSubmit(e) {
+    e.preventDefault();
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerText;
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Invio in corso...';
+
+    // Raccogliamo i valori scelti dall'utente
+    const supportSelect = document.getElementById('customSupport');
+    const detailSelect = document.getElementById('customDetail');
+    
+    const supportText = supportSelect.options[supportSelect.selectedIndex].text;
+    const detailText = detailSelect.options[detailSelect.selectedIndex].text;
+    
+    const priceEstimate = parseFloat(supportSelect.value) + parseFloat(detailSelect.value);
+
+    // Prepariamo l'oggetto con i dati per il backend
+    const payload = {
+        customerName: 'Cliente Web', // Oppure puoi aggiungere un campo Nome nel form
+        customerEmail: 'richiesta@marfthelab.com', // Oppure un campo Email dedicato nel form
+        productType: supportText,
+        style: detailText,
+        description: `Richiesta Custom: ${supportText} con dettaglio ${detailText}`,
+        budget: priceEstimate
+    };
+
+    try {
+        const response = await fetch('/api/custom-request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Richiesta inviata con successo! Salvata nel database.');
+            e.target.reset();
+            updateCustomEstimate();
+        } else {
+            alert('Errore durante l\'invio: ' + (data.error || 'Impossibile inviare la richiesta'));
         }
+    } catch (error) {
+        console.error('Errore di connessione:', error);
+        alert('Errore di connessione con il server.');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = originalText;
+    }
+}
 
         function initHeroCanvas() {
             const canvas = document.getElementById('heroCanvas');
