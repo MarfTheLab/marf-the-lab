@@ -186,7 +186,7 @@
         </div>
     </section>
 
-    <!-- CUSTOM REQUEST STUDIO -->
+<!-- CUSTOM REQUEST STUDIO -->
     <section id="customStudio" class="py-20 bg-darkCard/60 relative border-y border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -202,6 +202,21 @@
                 <div class="lg:col-span-7">
                     <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl">
                         <form id="customForm" onsubmit="handleCustomSubmit(event)" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Nome e Cognome</label>
+                                    <input type="text" id="customerName" required placeholder="Es. Mario Rossi" class="w-full bg-darkElevated border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-brandAccent" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Email di Contatto</label>
+                                    <input type="email" id="customerEmail" required placeholder="Es. mario@example.com" class="w-full bg-darkElevated border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-brandAccent" />
+                                </div>
+                            </div>
+  <div>
+    <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Email di Contatto</label>
+    <input type="email" id="customerEmail" required placeholder="Es. mario@example.com" class="w-full bg-darkElevated border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-brandAccent" />
+  </div>
+</div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Supporto</label>
