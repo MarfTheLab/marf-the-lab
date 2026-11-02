@@ -1,0 +1,258 @@
+/* =========================================
+   MARF THE LAB - COMPONENTS.CSS
+   Reusable UI components
+   ========================================= */
+
+.product-card {
+    min-height: 100%;
+}
+
+.product-card-image {
+    height: 16rem;
+}
+
+.product-card-image img {
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-card-image img {
+    transform: scale(1.05);
+}
+
+.cart-item {
+    gap: 1rem;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.cart-quantity-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1d2a;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #f0f3f8;
+    transition: 0.2s ease;
+}
+
+.cart-quantity-btn:hover {
+    border-color: #ff007f;
+    color: #00f3ff;
+}
+
+.cart-remove-btn {
+    color: #94a3b8;
+    transition: color 0.2s ease;
+}
+
+.cart-remove-btn:hover {
+    color: #ff007f;
+}
+
+.empty-state {
+    min-height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.search-result {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.search-result:hover {
+    color: #00f3ff;
+    transform: translateX(3px);
+}
+
+.filter-btn.active {
+    color: #ffffff;
+    background: linear-gradient(to right, #ff007f, #a855f7);
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+    border-color: transparent;
+}
+
+#mobileMenu {
+    min-height: 100dvh;
+}
+
+#cartDrawer,
+#searchModal {
+    transition: opacity 0.25s ease;
+}
+
+.custom-file-input {
+    cursor: pointer;
+}
+
+@media (max-width: 640px) {
+    .product-card-image {
+        height: 14rem;
+    }
+}
+
+/* =========================================
+   PORTFOLIO - CAROSELLO CON PULSANTI KUNAI
+   ========================================= */
+
+.portfolio-carousel {
+    position: relative;
+    padding: 0 4.25rem;
+}
+
+.portfolio-track {
+    --gap: 1.5rem;
+    --per-view: 4;
+    display: flex;
+    gap: var(--gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding: 0.25rem 0;
+    outline: none;
+}
+
+.portfolio-track::-webkit-scrollbar {
+    display: none;
+}
+
+.portfolio-track > .portfolio-card {
+    flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+    min-width: 0;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+}
+
+.portfolio-track > .portfolio-empty {
+    flex: 1 0 100%;
+}
+
+.kunai-btn {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 35% 30%, #262a3b, #12141d 70%);
+    border: 1.5px solid rgba(255, 0, 127, 0.55);
+    box-shadow: 0 0 18px rgba(255, 0, 127, 0.35), inset 0 0 12px rgba(168, 85, 247, 0.18);
+    cursor: pointer;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+.kunai-prev { left: 0; }
+.kunai-next { right: 0; }
+
+.kunai-icon {
+    width: 2.4rem;
+    height: 0.9rem;
+    overflow: visible;
+    filter: drop-shadow(0 0 3px rgba(0, 243, 255, 0.45));
+    transition: transform 0.25s ease;
+}
+
+.kunai-prev .kunai-icon { transform: rotate(180deg); }
+
+.kunai-btn:hover:not(:disabled),
+.kunai-btn:focus-visible {
+    border-color: #00f3ff;
+    box-shadow: 0 0 24px rgba(0, 243, 255, 0.5), inset 0 0 14px rgba(0, 243, 255, 0.18);
+    outline: none;
+}
+
+.kunai-next:hover:not(:disabled) .kunai-icon { transform: translateX(3px); }
+.kunai-prev:hover:not(:disabled) .kunai-icon { transform: rotate(180deg) translateX(3px); }
+
+.kunai-btn:disabled {
+    opacity: 0.28;
+    cursor: default;
+    box-shadow: none;
+}
+
+/* "lancio" del kunai al click */
+.kunai-next.is-throwing .kunai-icon { animation: kunaiThrowRight 0.35s ease; }
+.kunai-prev.is-throwing .kunai-icon { animation: kunaiThrowLeft 0.35s ease; }
+
+@keyframes kunaiThrowRight {
+    0%   { transform: translateX(0); }
+    45%  { transform: translateX(9px); opacity: 0.4; }
+    46%  { transform: translateX(-9px); opacity: 0.4; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes kunaiThrowLeft {
+    0%   { transform: rotate(180deg) translateX(0); }
+    45%  { transform: rotate(180deg) translateX(9px); opacity: 0.4; }
+    46%  { transform: rotate(180deg) translateX(-9px); opacity: 0.4; }
+    100% { transform: rotate(180deg) translateX(0); opacity: 1; }
+}
+
+.portfolio-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    min-height: 0.5rem;
+}
+
+.portfolio-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.25s ease, background 0.25s ease;
+}
+
+.portfolio-dot.is-active {
+    width: 1.5rem;
+    background: linear-gradient(to right, #ff007f, #00f3ff);
+}
+
+@media (max-width: 1023px) {
+    .portfolio-track { --per-view: 3; }
+}
+
+@media (max-width: 767px) {
+    .portfolio-track { --per-view: 2; --gap: 1rem; }
+    .portfolio-carousel { padding: 0 3.25rem; }
+    .kunai-btn { width: 2.75rem; height: 2.75rem; }
+    .kunai-icon { width: 1.9rem; height: 0.75rem; }
+}
+
+@media (max-width: 479px) {
+    .portfolio-track { --per-view: 1; }
+}
+
+/* =========================================
+   CATALOGO - MOCKUP PRODOTTO (felpa / t-shirt / tela)
+   ========================================= */
+
+.product-card-image > svg.product-mockup {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-card-image > svg.product-mockup {
+    transform: scale(1.04);
+}
