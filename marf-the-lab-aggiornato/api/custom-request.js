@@ -1,30 +1,40 @@
-const dbConnect = require('../lib/dbConnect');
-const CustomRequest = require('../models/CustomRequest');
+const mongoose = require('mongoose');
 
-module.exports = async function handler(req, res) {
-  await dbConnect();
+const MONGODB_URI = process.env.MONGODB_URI;
 
-  if (req.method === 'POST') {
-    try {
-      const { customerName, customerEmail, style, productType, description, estimatedPrice, referenceImages } = req.body;
+if (!MONGODB_URI) {
+  throw new Error('Definisci la variabile d\'ambiente MONGODB_URI nelle impostazioni di Vercel');
+}
 
-      const newRequest = new CustomRequest({
-        customerName,
-        customerEmail,
-        style,
-        productType,
-        description,
-        estimatedPrice,
-        referenceImages: referenceImages || []
-      });
+let cached = global.mongoose;
 
-      await newRequest.save();
-      return res.status(201).json({ success: true, requestId: newRequest._id });
-    } catch (error) {
-      return res.status(400).json({ error: 'Errore nel salvataggio della richiesta', details: error.message });
-    }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
   }
-};
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
+  }
+  
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
+  return cached.conn;
+}
+
+module.exports = dbConnect;
